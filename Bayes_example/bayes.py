@@ -99,10 +99,10 @@ class Search():
             self.area_actual = 2
             
         elif area ==3:
-            x = self.sailor_actual[0] + SA2_CORNERS[0]
-            y = self.sailor_actual[1] + SA2_CORNERS[1]
+            x = self.sailor_actual[0] + SA3_CORNERS[0]
+            y = self.sailor_actual[1] + SA3_CORNERS[1]
             self.area_actual = 3
-        return x,y
+        return int(x),int(y)
 
     def calc_search_effectiveness(self):
         """Set decimal search effectiveness value per search area/ """
@@ -151,20 +151,24 @@ def draw_menu(search_num):
         7 - Start over
         """
         )
-def main():
+def main(alg=None):
     app = Search('Cape Python')
     app.draw_map(last_known=(160,290))
     sailor_x,sailor_y = app.sailor_final_location(num_search_areas=3)
     print("-" * 65)
     print("\nInitial Target (P) Probabilities")
     print("P1 = {:.3f}, P2 = {:.3f}, P3 = {:.3f}".format(app.p1, app.p2, app.p3))
+
     search_num = 1
-    
     while True:
         app.calc_search_effectiveness()
         draw_menu(search_num)
-        choice = input("Choice: ")
-        
+
+        if alg==None:
+            choice = input("Choice: ")
+        else:
+            choice=alg(app.p1,app.p2,app.p3)
+
         if choice == "0":
             sys.exit()
             
@@ -208,7 +212,7 @@ def main():
             main()
             
         else:
-            Print("\nSorry, but that isn't a valid choise.", file=sys.stderr)
+            print("\nSorry, but that isn't a valid choise.", file=sys.stderr)
             continue
         
         app.revise_target_probs() #update target probabilities
@@ -226,15 +230,21 @@ def main():
                   .format(search_num + 1))
             print("P1 = {:.3f}, P2 = {:.3f}, P3 = {:.3f}"
                   .format(app.p1, app.p2, app.p3))
+            search_num += 1
         else:
             cv.circle(app.img, (sailor_x, sailor_y),3,(255, 0, 0),-1)
             cv.imshow('Search Area', app.img)
-            cv.waitKey(1500)
-            main()
-        search_num +=1
+
+            if alg==None:
+                cv.waitKey(5000)
+                main()
+            else:
+                break
+
+    return search_num
 
 if __name__ == '__main__':
-    main() 
+    main()
         
         
         
