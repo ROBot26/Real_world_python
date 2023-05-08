@@ -5,7 +5,7 @@ import numpy as np
 import cv2 as cv
 
 
-MAP_FILE ='cape_python.png' #name of png map file in openCV
+MAP_FILE = 'cape_python.png'  #name of png map file in openCV
 
 #Define search area grids by upper-left and lower-right corner pixles
 SA1_CORNERS= (130, 265, 180, 315) #(UL-X, UL-Y, LR-X, LR-Y)

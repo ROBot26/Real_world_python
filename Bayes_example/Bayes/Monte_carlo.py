@@ -1,4 +1,4 @@
-from bayes import main
+from Bayes.bayes import main
 import numpy as np
 import time
 
@@ -24,7 +24,7 @@ start_t=time.perf_counter()
 
 
 #how many trials will be used to compare algorithms
-num_iter=100
+num_iter=5
 
 trials=np.zeros(num_iter)
 
@@ -37,12 +37,16 @@ mean_alg1=np.mean(trials)
 std_alg1=np.std(trials)
 
 #Checking the splitting up method
-
-for i in range(len(trials)):
-    trials[i]=main(top_two)
+trials2=np.zeros(num_iter)
+for i in range(len(trials2)):
+    trials2[i]=main(top_two)
     #print("This iteration took " + str(trials[i]) + " iterations")
-mean_alg2=np.mean(trials)
-std_alg2=np.std(trials)
+mean_alg2=np.mean(trials2)
+std_alg2=np.std(trials2)
+
+trials_diff=trials-trials2
+trials_diff_std=np.std(trials_diff)
+
 
 end_t=time.perf_counter()
 
