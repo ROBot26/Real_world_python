@@ -6,12 +6,12 @@ n=10000
 
 array=np.zeros(n)
 for i in range(n):
-    array[i]=int((random.triangular(1,4)))
-y=np.zeros(4)
-x=np.zeros(4)
+    array[i]=int((random.triangular(1,10)))
+y=np.zeros(10)
+x=np.zeros(10)
 
 #Add together instances of a given integer in the random array
-for i in range(1,4):
+for i in range(1,10):
     y[i]=np.sum(array==i)/n*100
     x[i]=i
     
